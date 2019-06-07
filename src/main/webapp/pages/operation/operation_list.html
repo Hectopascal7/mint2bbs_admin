@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>管理员列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../static/css/font.css">
+    <link rel="stylesheet" href="../../static/css/weadmin.css">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="weadmin-nav">
+    <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">系统统计</a>
+        <a><cite>操作记录</cite></a>
+    </span>
+    <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon layui-icon-refresh"></i>
+    </a>
+</div>
+<div class="weadmin-body">
+
+    <table class="layui-hide" id="noticeList"></table>
+
+    <script type="text/html" id="bestTpl">
+        <input type="checkbox" name="isbest" id="b{{d.tid}}" lay-skin="switch" lay-text="精华|普通"
+               lay-filter="isbest" {{ d.isbest== 1 ? 'checked' : '' }}>
+    </script>
+
+    <script type="text/html" id="stickyTpl">
+        <input type="checkbox" name="issticky" id="s{{d.tid}}" lay-skin="switch" lay-text="置顶|普通"
+               lay-filter="issticky" {{ d.issticky== 1 ? 'checked' : '' }}>
+    </script>
+
+
+    <script type="text/html" id="operateTpl">
+        <span class="layui-btn layui-btn-normal layui-btn-xs" onclick="MintShow('查看文章','./show.html',600,400)"
+              href="javascript:;"><i class="layui-icon layui-icon-read"></i>查看</span>
+        <span class="layui-btn layui-btn-normal layui-btn-xs" onclick="member_del(this,'要删除的id')"
+              href="javascript:;"><i class="layui-icon layui-icon-delete"></i>删除</span>
+    </script>
+    <script src="../../lib/layui/layui.js" charset="utf-8"></script>
+
+
+</div>
+<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+<script src="../../static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
+</body>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData"
+                onclick="MintShow('发布公告','add.html',460,500)"><i class="layui-icon layui-icon-edit"></i>发布公告
+        </button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength"><i class="layui-icon layui-icon-delete"></i>删除公告
+        </button>
+        <!--            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+    </div>
+</script>
+<script>
+    layui.extend({
+        admin: '{/}../../static/js/admin'
+    });
+    layui.use(['table', 'jquery', 'form', 'admin'], function () {
+        var table = layui.table,
+            $ = layui.jquery,
+            form = layui.form,
+            admin = layui.admin;
+
+        table.render({
+            elem: '#noticeList',
+            toolbar: '#toolbarDemo',
+            height: 'full-130',
+            cols: [
+                [{
+                    type: 'checkbox'
+                }, {
+                    field: 'oid', title: '记录标识', align: 'center'
+                }, {
+                    field: 'opuid', title: '执行人', sort: true, align: 'center'
+                }, {
+                    field: 'uid', title: '被执行人', sort: true, align: 'center'
+                }, {
+                    field: 'otime', title: '操作时间', align: 'center'
+                }, {
+                    field: 'optype', title: '操作类型', align: 'center'
+                }, {
+                    field: 'opobject', title: '操作对象类型', align: 'center'
+                }, {
+                    field: 'note', title: '备注', templet: '#bestTpl', unresize: true, align: 'center'
+                }]
+            ],
+            url: '/operation/getAllOperation.do',
+            event: true,
+            page: true
+        });
+        /*
+         *数据表格中form表单元素是动态插入,所以需要更新渲染下
+         * http://www.layui.com/doc/modules/form.html#render
+         * */
+        $(function () {
+            form.render();
+        });
+
+        var active = {
+            reload: function () {
+                var s_title = $('#s_title');
+                var s_isbest = $('#s_isbest');
+                var s_issticky = $('#s_issticky');
+                //执行重载
+                table.reload('noticeList', {
+                    url: '/post/getPostWithCondition.do',
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    method: 'post',
+                    where: {
+                        's_section': 'notice',
+                        's_title': s_title.val(),
+                        's_isbest': s_isbest.val(),
+                        's_issticky': s_issticky.val()
+                    }
+                });
+            }
+        };
+
+        $('#search').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+        layui.use('form', function () {
+            var form = layui.form;
+            //监听指定开关
+            form.on('switch(isbest)', function (data) {
+                var tid = this.id.substr(1, this.id.length - 1);
+                var isbest;
+                if (this.checked) {
+                    // 精华帖状态
+                    isbest = 1;
+                } else {
+                    // 普通状态
+                    isbest = 0;
+                }
+                var $ = layui.jquery;
+                layer.confirm('确定设置/取消精华帖？', function () {
+                    $.ajax({
+                        type: 'post',
+                        url: '/post/updatePostIsBest.do',
+                        dataType: 'json',
+                        data: {
+                            sid: 'notice',
+                            tid: tid,
+                            isbest: isbest
+                        },
+                        async: false,
+                        success: function (data) {
+                            layer.alert(data.msg);
+                        },
+                        error: function (data) {
+                            layer.alert("调用服务失败！");
+                        }
+                    })
+                });
+            });
+            // 监听指定开关
+            form.on('switch(issticky)', function (data) {
+                var tid = this.id.substr(1, this.id.length - 1);
+                var issticky;
+                if (this.checked) {
+                    // 精华帖状态
+                    issticky = 1;
+                } else {
+                    // 普通状态
+                    issticky = 0;
+                }
+                var $ = layui.jquery;
+                layer.confirm('确定设置/取消置顶帖？', function () {
+                    $.ajax({
+                        type: 'post',
+                        url: '/post/updatePostIsSticky.do',
+                        dataType: 'json',
+                        data: {
+                            sid: 'notice',
+                            tid: tid,
+                            issticky: issticky
+                        },
+                        async: false,
+                        success: function (data) {
+                            layer.alert(data.msg);
+                        },
+                        error: function (data) {
+                            layer.alert("调用服务失败！");
+                        }
+                    })
+                });
+            });
+
+        });
+
+        function delAll(argument) {
+            var data = tableCheck.getData();
+            layer.confirm('确认要删除吗？' + data, function (index) {
+                //捉到所有被选中的，发异步进行删除
+                layer.msg('删除成功', {
+                    icon: 1
+                });
+                $(".layui-form-checked").not('.header').parents('tr').remove();
+            });
+        }
+    });
+</script>
+
+</html>

@@ -243,6 +243,12 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+        <!-- Aliyun-SMS API -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.0.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -304,7 +310,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <configuration>
                     <path>/</path>
-                    <port>8080</port>
+                    <port>8081</port>
                 </configuration>
             </plugin>
             <!-- MybatisGenerator-Plugin -->

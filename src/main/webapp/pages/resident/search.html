@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>住所检索</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../static/css/font.css">
+    <link rel="stylesheet" href="../../static/css/weadmin.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+</head>
+
+<body>
+<div class="weadmin-body">
+    <form class="layui-form layui-form-pane" id="userinfo" lay-filter="userinfo">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label for="building" class="layui-form-label">楼号</label>
+                <div class="layui-input-inline">
+                    <select lay-verify="required" lay-search="" id="building" name="building">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="1">1号楼</option>
+                        <option value="2">2号楼</option>
+                        <option value="3">3号楼</option>
+                        <option value="4">4号楼</option>
+                        <option value="5">5号楼</option>
+                        <option value="6">6号楼</option>
+                        <option value="7">7号楼</option>
+                        <option value="8">8号楼</option>
+                        <option value="9">9号楼</option>
+                        <option value="10">10号楼</option>
+                        <option value="11">11号楼</option>
+                        <option value="12A">12A号楼</option>
+                        <option value="12B">12B号楼</option>
+                        <option value="13">13号楼</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="unit" class="layui-form-label">单元号</label>
+            <div class="layui-input-inline">
+                <select lay-verify="required" lay-search="" id="unit" name="unit">
+                    <option value="">直接选择或搜索选择</option>
+                    <option value="1">1单元</option>
+                    <option value="2">2单元</option>
+                    <option value="3">3单元</option>
+                    <option value="4">4单元</option>
+                    <option value="5">5单元</option>
+                    <option value="6">6单元</option>
+                    <option value="7">7单元</option>
+                    <option value="8">8单元</option>
+                    <option value="9">9单元</option>
+                    <option value="10">10单元</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="room" class="layui-form-label">楼层号</label>
+            <div class="layui-input-inline">
+                <select lay-verify="required" lay-search="" id="floor" name="floor">
+                    <option value="">直接选择或搜索选择</option>
+                    <option value="1">1层</option>
+                    <option value="2">2层</option>
+                    <option value="3">3层</option>
+                    <option value="5A">5A层</option>
+                    <option value="5B">5B层</option>
+                    <option value="6">6层</option>
+                    <option value="7">7层</option>
+                    <option value="8">8层</option>
+                    <option value="9">9层</option>
+                    <option value="10">10层</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="room" class="layui-form-label">室号</label>
+            <div class="layui-input-inline">
+                <select lay-verify="required" lay-search="" id="room" name="room">
+                    <option value="">直接选择或搜索选择</option>
+                    <option value="01">01室</option>
+                    <option value="02">02室</option>
+                    <option value="03">03室</option>
+                    <option value="04">04室</option>
+                    <option value="05">05室</option>
+                    <option value="06">06室</option>
+                    <option value="07">07室</option>
+                    <option value="08">08室</option>
+                    <option value="09">09室</option>
+                    <option value="10">10室</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center">
+            <button class="layui-btn" lay-filter="OK" onclick="sendData()">确定</button>
+        </div>
+    </form>
+</div>
+<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.extend({
+        admin: '{/}../../static/js/admin'
+    });
+    layui.use(['form', 'layer', 'admin'], function () {
+        var form = layui.form;
+        var admin = layui.admin;
+        var layer = layui.layer;
+        var $ = layui.jquery;
+        form.render();
+    });
+
+    function sendData() {
+        var building = $('#building').val();
+        var unit = $('#unit').val();
+        var floor = $('#floor').val();
+        var room = $('#room').val();
+        parent.getResidentByHouse(building, unit, floor, room);
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+
+
+</script>
+</body>
+
+</html>

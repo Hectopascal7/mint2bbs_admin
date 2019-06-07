@@ -23,9 +23,8 @@
         <a href="./index.html">薄荷社区管理端 v1.0</a>
     </div>
     <div class="left_open">
-        <!-- <i title="展开左侧栏" class="iconfont">&#xe699;</i> -->
+        <!--         <i title="展开左侧栏" class="iconfont">&#xe699;</i>-->
         <i title="展开左侧栏" class="layui-icon layui-icon-shrink-right"></i>
-
     </div>
     <ul class="layui-nav left fast-add" lay-filter="">
         <li class="layui-nav-item">
@@ -33,14 +32,16 @@
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
-                    <a onclick="WeAdminShow('资讯','https://www.baidu.com/')"><i class="layui-icon layui-icon-list"></i>资讯</a>
+                    <a onclick="MintShow('资讯','https://www.baidu.com/')"><i
+                            class="layui-icon layui-icon-list"></i>资讯</a>
                 </dd>
                 <dd>
-                    <a onclick="WeAdminShow('图片','http://www.baidu.com')"><i
+                    <a onclick="MintShow('图片','http://www.baidu.com')"><i
                             class="layui-icon layui-icon-picture-fine"></i>图片</a>
                 </dd>
                 <dd>
-                    <a onclick="WeAdminShow('用户','https://www.baidu.com/')"><i class="layui-icon layui-icon-user"></i>用户</a>
+                    <a onclick="MintShow('用户','https://www.baidu.com/')"><i
+                            class="layui-icon layui-icon-user"></i>用户</a>
                 </dd>
             </dl>
         </li>
@@ -51,13 +52,10 @@
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
-                    <a onclick="WeAdminShow('个人信息','http://www.baidu.com')">个人信息</a>
+                    <a href="javascript:MintShow('个人信息','/pages/user/user_info.html',350,630)">个人信息</a>
                 </dd>
                 <dd>
-                    <a onclick="WeAdminShow('切换帐号','./login.html')">切换帐号</a>
-                </dd>
-                <dd>
-                    <a class="loginout" href="./login.html">退出</a>
+                    <a class="loginout" href="javascript:exit()">退出</a>
                 </dd>
             </dl>
         </li>
@@ -81,16 +79,15 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="./pages/member/list.html">
+                        <a _href="/pages/resident/resident_list.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>删除用户</cite>
-
+                            <cite>住户管理</cite>
                         </a>
                     </li>
                     <li>
-                        <a _href="./pages/member/del.html">
+                        <a _href="./pages/user/user_list.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>封禁用户</cite>
+                            <cite>用户管理</cite>
                         </a>
                     </li>
                 </ul>
@@ -98,33 +95,12 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe705;</i>
-                    <cite>模块管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="./pages/article/list.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>模块管理</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/article/category.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>模块管理</cite>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe723;</i>
                     <cite>帖子管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="./pages/order/list.html">
+                        <a _href="/pages/topic/topic_list.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>帖子管理</cite>
                         </a>
@@ -133,33 +109,45 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe726;</i>
-                    <cite>管理功能</cite>
+                    <i class="iconfont">&#xe705;</i>
+                    <cite>商品管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="./pages/admin/list.html">
+                        <a _href="/pages/good/good_list.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>公告发布</cite>
+                            <cite>商品管理</cite>
                         </a>
                     </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe715;</i>
+                    <cite>微博管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
                     <li>
-                        <a _href="./pages/admin/role.html">
+                        <a _href="/pages/weibo/weibo_list.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>社区活动</cite>
+                            <cite>微博管理</cite>
                         </a>
                     </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe726;</i>
+                    <cite>公告管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
                     <li>
-                        <a _href="./pages/admin/cate.html">
+                        <a _href="/pages/notice/notice_list.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限分类</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/admin/rule.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限管理</cite>
+                            <cite>社区公告</cite>
                         </a>
                     </li>
                 </ul>
@@ -172,57 +160,15 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="./pages/echarts/echarts1.html">
+                        <a _href="./pages/operation/operation_list.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>拆线图</cite>
+                            <cite>操作记录</cite>
                         </a>
                     </li>
                     <li>
-                        <a _href="./pages/echarts/echarts2.html">
+                        <a _href="./pages/statistics/topic_statistics.html">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>柱状图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts3.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>地图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts4.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>饼图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts5.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>雷达图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts6.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>k线图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts7.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>热力图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts8.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>仪表图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="./pages/echarts/echarts9.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>地图DIY实例</cite>
+                            <cite>帖子统计</cite>
                         </a>
                     </li>
                 </ul>
@@ -230,7 +176,7 @@
         </ul>
     </div>
 </div>
-<!-- <div class="x-slide_left"></div> -->
+<!--<div class="x-slide_left"></div>-->
 <!-- 左侧菜单结束 -->
 <!-- 右侧主体开始 -->
 <div class="page-content">
@@ -249,10 +195,11 @@
 <!-- 右侧主体结束 -->
 <!-- 中部结束 -->
 <!-- 底部开始 -->
-<div class="footer">
-    <div class="copyright">Copyright ©2018 WeAdmin v1.0 All Rights Reserved</div>
+<div class="footer" style="text-align: center">
+    <div class="copyright">Copyright ©2019 薄荷社区 All Rights Reserved</div>
 </div>
 <!-- 底部结束 -->
+
 <script type="text/javascript">
     //			layui扩展模块的两种加载方式-示例
     //		    layui.extend({
@@ -266,6 +213,7 @@
         base: './static/js/'
         , version: '101100'
     }).use('admin');
+
     layui.use(['jquery', 'admin'], function () {
         var $ = layui.jquery;
         $(function () {
@@ -284,8 +232,28 @@
         });
     });
 
+    function exit() {
+        var $ = layui.jquery;
+        $.ajax({
+            type: 'post',
+            url: '/user/quit.do',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                layer.msg(data.msg, function () {
+                    window.location.href = './login.html';
+                });
+            },
+            error: function (data) {
+                layer.alert(data.msg);
+            }
+        })
+    }
+
 </script>
+
 </body>
+
 <!--Tab菜单右键弹出菜单-->
 <ul class="rightMenu" id="rightMenu">
     <li data-type="fresh">刷新</li>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>发布公告</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../static/css/font.css">
+    <link rel="stylesheet" href="../../static/css/weadmin.css">
+    <script src="/script/jquery-3.3.1.min.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+</head>
+
+<body>
+<div class="weadmin-body">
+    <form class="layui-form layui-form-pane" id="userinfo" lay-filter="userinfo">
+        <div class="layui-form-item">
+            <label for="name" class="layui-form-label">住户姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name" required="" lay-verify="required"
+                       autocomplete="off" class="layui-input" value="{{d.name}}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label for="building" class="layui-form-label">楼号</label>
+                <div class="layui-input-inline">
+                    <select lay-verify="required" lay-search="" id="building" name="building">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="1">1号楼</option>
+                        <option value="2">2号楼</option>
+                        <option value="3">3号楼</option>
+                        <option value="4">4号楼</option>
+                        <option value="5">5号楼</option>
+                        <option value="6">6号楼</option>
+                        <option value="7">7号楼</option>
+                        <option value="8">8号楼</option>
+                        <option value="9">9号楼</option>
+                        <option value="10">10号楼</option>
+                        <option value="11">11号楼</option>
+                        <option value="12A">12A号楼</option>
+                        <option value="12B">12B号楼</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="unit" class="layui-form-label">单元号</label>
+            <div class="layui-input-inline">
+                <select lay-verify="required" lay-search="" id="unit" name="unit">
+                    <option value="">直接选择或搜索选择</option>
+                    <option value="1">1单元</option>
+                    <option value="2">2单元</option>
+                    <option value="3" selected="{{d.uint=='3'? 'true':'false'}}">3单元</option>
+                    <option value="4" selected="{{d.uint=='4'? 'true':'false'}}">4单元</option>
+                    <option value="5" selected="{{d.uint==5? 'true':'false'}}">5单元</option>
+                    <option value="6" selected="{{d.uint==6? 'true':'false'}}">6单元</option>
+                    <option value="7" selected="{{d.uint==7? 'true':'false'}}">7单元</option>
+                    <option value="8" selected="{{d.uint==8? 'true':'false'}}">8单元</option>
+                    <option value="9" selected="{{d.uint==9? 'true':'false'}}">9单元</option>
+                    <option value="10" selected="{{d.uint==10? 'true':'false'}}">10单元</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="room" class="layui-form-label">楼层号</label>
+            <div class="layui-input-inline">
+                <select lay-verify="required" lay-search="" id="floor" name="floor">
+                    <option value="">直接选择或搜索选择</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="5A">5A</option>
+                    <option value="5B">5B</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="room" class="layui-form-label">室号</label>
+            <div class="layui-input-inline">
+                <select lay-verify="required" lay-search="" id="room" name="room">
+                    <option value="">直接选择或搜索选择</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="phone" class="layui-form-label">手机号码</label>
+            <div class="layui-input-inline">
+                <input type="text" id="phone" name="phone" required="" lay-verify="required"
+                       autocomplete="off" class="layui-input" value="{{d.phone}}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="idcnum" class="layui-form-label">身份证号码</label>
+            <div class="layui-input-inline">
+                <input type="text" id="idcnum" name="idcnum" required="" lay-verify="required"
+                       autocomplete="off" class="layui-input" value="{{d.idcnum}}">
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <label for="dataId" class="layui-form-label">父页面传值隐藏域</label>
+            <div class="layui-input-inline">
+                <input type="text" id="dataId" name="uid"
+                       autocomplete="off" class="layui-input" disabled value="{{d.uid}}">
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center">
+            <button class="layui-btn" lay-filter="update" lay-submit="">提交更改</button>
+        </div>
+    </form>
+</div>
+<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+    layui.extend({
+        admin: '{/}../../static/js/admin'
+    });
+    layui.use(['form', 'layer', 'admin'], function () {
+        var form = layui.form;
+        var admin = layui.admin;
+        var layer = layui.layer;
+        var $ = layui.jquery;
+        form.render();
+        var userinfo;
+        $.ajax({
+            type: 'post',
+            url: '/resident/getResidentInfo.do',
+            dataType: 'json',
+            data: {
+                uid: $('#dataId').val()
+            },
+            async: false,
+            success: function (data) {
+                userinfo = data.data;
+            },
+            error: function (data) {
+                layer.alert("调取服务失败！");
+            }
+        })
+
+        // 模板引擎渲染
+        layui.use('laytpl', function () {
+
+            // 定义一个模板引擎
+            laytpl = layui.laytpl;
+
+            // 活跃用户榜单
+            var userinfo_model = document.getElementById('userinfo').innerHTML;
+            var userinfo_view = document.getElementById('userinfo');
+            laytpl(userinfo_model).render(userinfo, function (html) {
+                userinfo_view.innerHTML = html;
+                form.render('select'); //刷新select选择框渲染
+            });
+
+        });
+
+        //监听提交
+        form.on('submit(update)', function (data) {
+            // 获得frame索引
+            var index = parent.layer.getFrameIndex(window.name);
+            $.ajax({
+                type: 'post',
+                url: '/resident/updateResident.do',
+                dataType: 'json',
+                data: data.field,
+                async: false,
+                success: function (data) {
+                    layer.alert(data.msg, function () {
+                        // 修改成功，关闭当前frame
+                        parent.layer.close(index);
+                    });
+                },
+                error: function (data) {
+                    layer.alert(data.msg);
+                }
+            })
+            return false;
+        });
+    });
+
+
+</script>
+</body>
+
+</html>

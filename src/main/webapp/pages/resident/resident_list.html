@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>会员列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <link rel="stylesheet" href="../../static/css/font.css"/>
+    <link rel="stylesheet" href="../../static/css/weadmin.css"/>
+    <script src="../../script/jquery-3.3.1.min.js"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="weadmin-nav">
+			<span class="layui-breadcrumb">
+				<a href="javascript:;">首页</a> <a href="javascript:;">用户管理</a>
+				<a href="javascript:;"> <cite>住户管理</cite></a>
+			</span>
+    <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);"
+       title="刷新">
+        <i class="layui-icon layui-icon-refresh"></i>
+        <!-- <i class="layui-icon" style="line-height:30px">&#x1002;</i> -->
+    </a>
+</div>
+
+<div class="weadmin-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12">
+            住户检索：
+            <div class="layui-inline">
+                <input type="text" name="s_name" id="s_name" placeholder="姓名" autocomplete="off" class="layui-input"/>
+            </div>
+            <div class="layui-inline">
+                <input type="text" name="s_phone" id="s_phone" placeholder="手机号" autocomplete="off"
+                       class="layui-input"/>
+            </div>
+            <div class="layui-inline">
+                <input type="text" name="s_idcnum" id="s_idcnum" placeholder="身份证号" autocomplete="off"
+                       class="layui-input"/>
+            </div>
+            <div class="layui-inline">
+                <input type="text" name="s_nickname" id="s_nickname" placeholder="昵称" autocomplete="off"
+                       class="layui-input"/>
+            </div>
+            <a class="layui-btn" id="search" data-type="reload"><i class="layui-icon layui-icon-search"></i></a>
+            <a class="layui-btn" onclick="MintShow('住所检索','search.html',350,400)"><i class="layui-icon layui-icon-search"></i>住所检索</a>
+        </form>
+    </div>
+    <table class="layui-hide" id="residentList" lay-filter="residentList"></table>
+</div>
+<!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
+<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+<script src="../../static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/html" id="barDemo">
+    <span class="layui-btn layui-btn-normal layui-btn-xs"
+          onclick="MintEdit('编辑住户','./edit.html', '{{d.uid}}', 400, 530)" href="javascript:;">编辑</span>
+    <span class="layui-btn layui-btn-normal layui-btn-xs" onclick="deleteResident('{{d.uid}}')"
+          href="javascript:;">删除</span>
+</script>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData"
+                onclick="MintShow('录入住户','./add.html',460,520)">录入住户
+        </button>
+        <!--        功能可用-->
+        <!--        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">删除住户</button>-->
+        <!--                    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+    </div>
+</script>
+
+<script>
+
+    function getResidentByHouse(building, unit, floor, room) {
+        var table = layui.table;
+        table.render('#residentList');
+        table.reload('residentList', {
+            url: '/resident/getResidentByHouse.do',
+            page: {
+                curr: 1 //重新从第 1 页开始
+            },
+            method: 'post',
+            where: {
+                'building': building,
+                'unit': unit,
+                'floor': floor,
+                'room': room
+            }
+        });
+    }
+
+    layui.use('table', function () {
+        var table = layui.table;
+        var $ = layui.jquery;
+        table.render({
+            elem: '#residentList'
+            , url: '/resident/getResident.do'
+            , toolbar: '#toolbarDemo'
+            , title: '用户数据表'
+            , height: 'full-130'
+            , cols: [[
+                {type: 'checkbox'},
+                {field: 'uid', title: '用户标识码', unresize: true, sort: true, align: 'center'},
+                {field: 'name', title: '姓名', edit: 'text', align: 'center'},
+                {field: 'building', title: '楼号', edit: 'text', sort: true, align: 'center'},
+                {field: 'unit', title: '单元号', align: 'center'},
+                {field: 'floor', title: '楼层号', align: 'center'},
+                {field: 'room', title: '室号', align: 'center'},
+                {field: 'phone', title: '联系方式', sort: true, align: 'center'},
+                {field: 'idcnum', title: '身份证号', sort: true, align: 'center'},
+                {title: '操作', toolbar: '#barDemo', align: 'center'}
+            ]]
+            , page: true
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    // layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                    break;
+            }
+            ;
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.prompt({
+                    formType: 2
+                    , value: data.email
+                }, function (value, index) {
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+
+
+        var active = {
+            reload: function () {
+                var s_name = $('#s_name');
+                var s_phone = $('#s_phone');
+                var s_idcnum = $('#s_idcnum');
+                var s_nickname = $('#s_nickname');
+                //执行重载
+                table.reload('residentList', {
+                    url: '/resident/getResidentWithCondition.do',
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    method: 'post',
+                    where: {
+                        's_name': s_name.val(),
+                        's_phone': s_phone.val(),
+                        's_idcnum': s_idcnum.val(),
+                        's_nickname': s_nickname.val()
+                    }
+                });
+            }
+            // reloadByPhone: function () {
+            //     var s_phone = $('#s_phone');
+            //     //执行重载
+            //     table.reload('userList', {
+            //         url: '/user/getUserWithPhone.do',
+            //         page: {
+            //             curr: 1 //重新从第 1 页开始
+            //         },
+            //         method: 'post',
+            //         where: {
+            //             's_phone': s_phone.val(),
+            //         }
+            //     });
+            // }
+        };
+        $('#search').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+
+    function deleteResident(uid) {
+        layer.alert('确定删除住户？', function () {
+            $.ajax({
+                type: 'post',
+                url: '/resident/deleteResident.do',
+                dataType: 'json',
+                data: {
+                    uid: uid
+                },
+                async: false,
+                success: function (data) {
+                    layer.alert(data.msg);
+                },
+                error: function (data) {
+                    layer.alert("调取服务失败！");
+                }
+            })
+        });
+    }
+
+</script>
+</body>
+</html>

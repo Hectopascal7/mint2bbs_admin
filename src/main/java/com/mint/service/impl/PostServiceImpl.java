@@ -3,11 +3,8 @@ package com.mint.service.impl;
 import com.mint.common.Const;
 import com.mint.common.DataResponse;
 import com.mint.common.ServerResponse;
-import com.mint.dao.PostMapper;
-import com.mint.dao.SectionMapper;
-import com.mint.pojo.Post;
-import com.mint.pojo.Section;
-import com.mint.pojo.User;
+import com.mint.dao.*;
+import com.mint.pojo.*;
 import com.mint.service.IPostService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,16 @@ public class PostServiceImpl implements IPostService {
     private PostMapper postMapper;
     @Autowired
     private SectionMapper sectionMapper;
+    @Autowired
+    private CountMapper countMapper;
+    @Autowired
+    private CollectionMapper collectionMapper;
+    @Autowired
+    private ReplyMapper replyMapper;
+    @Autowired
+    private PraiseMapper praiseMapper;
+    @Autowired
+    private MessageMapper messageMapper;
 
     @Override
     public DataResponse<List<Post>> getAllPost(int page, int limit) {
@@ -56,8 +63,36 @@ public class PostServiceImpl implements IPostService {
     }
 
     @Override
-    public ServerResponse deletePost(String tid, String sid) {
-        return ServerResponse.createBySuccessMessage("成功了！");
+    public ServerResponse deletePost(String tid, String sid, HttpSession httpSession) {
+        Section section = sectionMapper.selectByPrimaryKey(sid);
+        String tb_name = section.getTbname();
+//        Count count = countMapper.selectByPrimaryKey(uid);
+//        count.setGcount(count.getGcount() - 1);
+//        Integer upd_result = countMapper.updateByPrimaryKey(count);
+        // 删除回复
+        replyMapper.deleteByTid(tid);
+        // 删除收藏
+        collectionMapper.deleteByIid(tid);
+        // 删除点赞
+        praiseMapper.deleteByIid(tid);
+        // 删除消息
+        messageMapper.deleteByOid(tid);
+        // 删除帖子
+        // 需要修改
+        Post post = postMapper.selectByPrimaryKey(tid);
+        String note = "【删除】" + "【帖子】：" + post.toString();
+        Integer del_result = postMapper.deletePostByTbnameAndTid(tb_name, tid);
+        if (Const.OP_SUCCESS == del_result) {
+            String bid = UUID.randomUUID().toString();
+            User opUser = (User) httpSession.getAttribute(Const.CURRENT_USER);
+            String opuid = opUser.getUid();
+            String uid = post.getUid();
+            Date btime = new Date(System.currentTimeMillis());
+            Operation operation = new Operation(bid, opuid, uid, btime, Const.OPERATION_TYPE_DELETE, Const.OPERATION_OBJECT_POST, note);
+            return ServerResponse.createBySuccessMessage("删除帖子成功！");
+        } else {
+            return ServerResponse.createBySuccessMessage("删除帖子失败！");
+        }
     }
 
     @Override

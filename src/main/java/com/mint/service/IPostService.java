@@ -15,7 +15,7 @@ public interface IPostService {
 
     ServerResponse postANotice(String title, String content, HttpSession httpSession);
 
-    ServerResponse deletePost(String tid, String sid);
+    ServerResponse deletePost(String tid, String sid, HttpSession httpSession);
 
     ServerResponse updatePostIsBest(String sid, String tid, int isbest);
 

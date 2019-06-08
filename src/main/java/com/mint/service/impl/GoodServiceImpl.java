@@ -3,9 +3,7 @@ package com.mint.service.impl;
 import com.mint.common.Const;
 import com.mint.common.DataResponse;
 import com.mint.common.ServerResponse;
-import com.mint.dao.CountMapper;
-import com.mint.dao.GoodMapper;
-import com.mint.dao.UserMapper;
+import com.mint.dao.*;
 import com.mint.pojo.Count;
 import com.mint.pojo.Good;
 import com.mint.service.IGoodService;
@@ -23,8 +21,13 @@ public class GoodServiceImpl implements IGoodService {
     @Autowired
     private CountMapper countMapper;
     @Autowired
-    private UserMapper userMapper;
-
+    private CollectionMapper collectionMapper;
+    @Autowired
+    private ReplyMapper replyMapper;
+    @Autowired
+    private PraiseMapper praiseMapper;
+    @Autowired
+    private MessageMapper messageMapper;
 
     @Override
     public DataResponse<List<Good>> getGood(int page, int limit, Integer isused, String title, Integer issaled) {
@@ -44,10 +47,19 @@ public class GoodServiceImpl implements IGoodService {
 
     @Override
     public ServerResponse deleteGood(String gid, String uid) {
+        // 用户商品数量-1
         Count count = countMapper.selectByPrimaryKey(uid);
         count.setGcount(count.getGcount() - 1);
         Integer upd_result = countMapper.updateByPrimaryKey(count);
         if (Const.OP_SUCCESS == upd_result) {
+            // 删除回复
+            replyMapper.deleteByTid(gid);
+            // 删除收藏
+            collectionMapper.deleteByIid(gid);
+            // 删除点赞
+            praiseMapper.deleteByIid(gid);
+            // 删除消息
+            messageMapper.deleteByOid(gid);
             Integer del_result = goodMapper.deleteByPrimaryKey(gid);
             if (Const.OP_SUCCESS == del_result) {
                 return ServerResponse.createBySuccessMessage("删除商品成功！");

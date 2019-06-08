@@ -69,10 +69,10 @@
 
 
     <script type="text/html" id="operateTpl">
-        <span class="layui-btn layui-btn-normal layui-btn-xs"
-              onclick="MintShow('查看文章','http://localhost:8080/page/portal/topic/detail.html?post={{d.tid}}&section={{d.sid}}',1100,500)"
-              href="javascript:;"><i class="layui-icon layui-icon-read"></i>查看</span>
-        <span class="layui-btn layui-btn-normal layui-btn-xs" onclick="member_del(this,'要删除的id')"
+<!--        <span class="layui-btn layui-btn-normal layui-btn-xs"-->
+<!--              onclick="MintShow('查看文章','http://localhost:8080/page/portal/topic/detail.html?post={{d.tid}}&section={{d.sid}}',1100,500)"-->
+<!--              href="javascript:;"><i class="layui-icon layui-icon-read"></i>查看</span>-->
+        <span class="layui-btn layui-btn-normal layui-btn-xs" onclick="deletePost('{{d.tid}}','{{d.sid}}')"
               href="javascript:;"><i class="layui-icon layui-icon-delete"></i>删除</span>
     </script>
     <script src="../../lib/layui/layui.js" charset="utf-8"></script>
@@ -271,6 +271,28 @@
             });
         }
     });
+
+    function deletePost(tid, sid) {
+        var $ = layui.jquery;
+        layer.alert('确定删除帖子？', function () {
+            $.ajax({
+                type: 'post',
+                url: '/post/deletePost.do',
+                dataType: 'json',
+                data: {
+                    tid: tid,
+                    sid: sid
+                },
+                async: false,
+                success: function (data) {
+                    layer.alert(data.msg);
+                },
+                error: function (data) {
+                    layer.alert("调取服务失败！");
+                }
+            })
+        });
+    }
 </script>
 
 </html>

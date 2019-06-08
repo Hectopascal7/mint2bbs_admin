@@ -465,4 +465,8 @@
             </if>
         </where>
     </select>
+    <delete id="deletePostByTbnameAndTid">
+    delete from ${tb_name}
+    where tid = #{tid,jdbcType=VARCHAR}
+  </delete>
 </mapper>

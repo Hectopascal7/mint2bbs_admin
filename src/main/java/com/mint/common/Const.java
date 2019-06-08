@@ -20,6 +20,7 @@ public class Const {
     public static final Integer USER_STATUS_NORMAL = 1;
     public static final Integer USER_STATUS_BAN = 0;
     public static final Integer USER_STATUS_LOGOUT = 2;
+    public static final Integer USER_STATUS_DELETE = 3;
 
     // 操作类型常量
     public static final Integer OPERATION_TYPE_ADD = 1;

@@ -95,6 +95,9 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ServerResponse deleteUser(String uid) {
+        User user = userMapper.selectByPrimaryKey(uid);
+        User nowUser = new User(user.getUid(), user.getLoginid(), user.getPassword(), user.getNickname(), user.getRole(), user.getSex(), user.getBirthday(), user.getLicense(), user.getPoint(), user.getJointime(), user.getEmail(), user.getSignature(), Const.USER_STATUS_DELETE, user.getProfile());
+        userMapper.updateByPrimaryKey(nowUser);
         return ServerResponse.createBySuccessMessage("成功了！");
     }
 

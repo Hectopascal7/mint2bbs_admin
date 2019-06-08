@@ -41,19 +41,19 @@ public class PostController {
 
     @RequestMapping(value = "/deletePost.do")
     @ResponseBody
-    public ServerResponse deletePost(String tid, String sid) {
-        return iPostService.deletePost(tid, sid);
+    public ServerResponse deletePost(String tid, String sid, HttpSession httpSession) {
+        return iPostService.deletePost(tid, sid,httpSession);
     }
 
     @RequestMapping(value = "updatePostIsBest.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse updatePostIsBest(String sid, String tid, int isbest) {
+    public ServerResponse updatePostIsBest(String sid, String tid, int isbest, HttpSession httpSession) {
         return iPostService.updatePostIsBest(sid, tid, isbest);
     }
 
     @RequestMapping(value = "updatePostIsSticky.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse updatePostIsSticky(String sid, String tid, int issticky) {
+    public ServerResponse updatePostIsSticky(String sid, String tid, int issticky, HttpSession httpSession) {
         return iPostService.updatePostIsSticky(sid, tid, issticky);
     }
 

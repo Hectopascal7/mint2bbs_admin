@@ -39,5 +39,7 @@ public interface PostMapper {
 
     List<Post> getPostWithoutSection(@Param("start") int start, @Param("limit") int limit, @Param("title") String title, @Param("isbest") Integer isbest, @Param("issticky") Integer issticky);
 
-    Integer getPostCountWithoutSection( @Param("title") String title, @Param("isbest") Integer isbest, @Param("issticky") Integer issticky);
+    Integer getPostCountWithoutSection(@Param("title") String title, @Param("isbest") Integer isbest, @Param("issticky") Integer issticky);
+
+    Integer deletePostByTbnameAndTid(@Param("tb_name") String tb_name, @Param("tid") String tid);
 }

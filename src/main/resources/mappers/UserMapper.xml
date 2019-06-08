@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mint.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="com.mint.pojo.User">
-    <constructor>
-      <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="loginid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="birthday" javaType="java.util.Date" jdbcType="DATE" />
-      <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="jointime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="signature" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.User">
-    <constructor>
-      <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="loginid" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="birthday" javaType="java.util.Date" jdbcType="DATE" />
-      <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="jointime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="signature" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="profile" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.mint.pojo.User">
+        <constructor>
+            <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="loginid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="birthday" javaType="java.util.Date" jdbcType="DATE"/>
+            <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="jointime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="signature" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.mint.pojo.User">
+        <constructor>
+            <idArg column="uid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="loginid" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="sex" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="birthday" javaType="java.util.Date" jdbcType="DATE"/>
+            <arg column="license" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="point" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="jointime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="signature" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="profile" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
     uid, loginid, password, nickname, role, sex, birthday, license, point, jointime, 
     email, signature, status
   </sql>
-  <sql id="Blob_Column_List">
+    <sql id="Blob_Column_List">
     profile
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tb_user
-    where uid = #{uid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_user
+        where uid = #{uid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_user
     where uid = #{uid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.mint.pojo.User">
+    <insert id="insert" parameterType="com.mint.pojo.User">
     insert into tb_user (uid, loginid, password, 
       nickname, role, sex, 
       birthday, license, point, 
@@ -67,143 +67,143 @@
       #{jointime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{profile,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.mint.pojo.User">
-    insert into tb_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="loginid != null">
-        loginid,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="nickname != null">
-        nickname,
-      </if>
-      <if test="role != null">
-        role,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="birthday != null">
-        birthday,
-      </if>
-      <if test="license != null">
-        license,
-      </if>
-      <if test="point != null">
-        point,
-      </if>
-      <if test="jointime != null">
-        jointime,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="signature != null">
-        signature,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="profile != null">
-        profile,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
-      </if>
-      <if test="loginid != null">
-        #{loginid,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="role != null">
-        #{role,jdbcType=INTEGER},
-      </if>
-      <if test="sex != null">
-        #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="birthday != null">
-        #{birthday,jdbcType=DATE},
-      </if>
-      <if test="license != null">
-        #{license,jdbcType=VARCHAR},
-      </if>
-      <if test="point != null">
-        #{point,jdbcType=INTEGER},
-      </if>
-      <if test="jointime != null">
-        #{jointime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="signature != null">
-        #{signature,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="profile != null">
-        #{profile,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.User">
-    update tb_user
-    <set>
-      <if test="loginid != null">
-        loginid = #{loginid,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="role != null">
-        role = #{role,jdbcType=INTEGER},
-      </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=INTEGER},
-      </if>
-      <if test="birthday != null">
-        birthday = #{birthday,jdbcType=DATE},
-      </if>
-      <if test="license != null">
-        license = #{license,jdbcType=VARCHAR},
-      </if>
-      <if test="point != null">
-        point = #{point,jdbcType=INTEGER},
-      </if>
-      <if test="jointime != null">
-        jointime = #{jointime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="signature != null">
-        signature = #{signature,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="profile != null">
-        profile = #{profile,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where uid = #{uid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.User">
+    <insert id="insertSelective" parameterType="com.mint.pojo.User">
+        insert into tb_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="loginid != null">
+                loginid,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="role != null">
+                role,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="license != null">
+                license,
+            </if>
+            <if test="point != null">
+                point,
+            </if>
+            <if test="jointime != null">
+                jointime,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="signature != null">
+                signature,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="profile != null">
+                profile,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="loginid != null">
+                #{loginid,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="license != null">
+                #{license,jdbcType=VARCHAR},
+            </if>
+            <if test="point != null">
+                #{point,jdbcType=INTEGER},
+            </if>
+            <if test="jointime != null">
+                #{jointime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="signature != null">
+                #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="profile != null">
+                #{profile,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mint.pojo.User">
+        update tb_user
+        <set>
+            <if test="loginid != null">
+                loginid = #{loginid,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                role = #{role,jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="license != null">
+                license = #{license,jdbcType=VARCHAR},
+            </if>
+            <if test="point != null">
+                point = #{point,jdbcType=INTEGER},
+            </if>
+            <if test="jointime != null">
+                jointime = #{jointime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="signature != null">
+                signature = #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="profile != null">
+                profile = #{profile,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where uid = #{uid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mint.pojo.User">
     update tb_user
     set loginid = #{loginid,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
@@ -220,7 +220,7 @@
       profile = #{profile,jdbcType=LONGVARCHAR}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mint.pojo.User">
+    <update id="updateByPrimaryKey" parameterType="com.mint.pojo.User">
     update tb_user
     set loginid = #{loginid,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
@@ -238,78 +238,85 @@
   </update>
 
 
-  <select id="getBBSUser" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List"/>
-    ,
-    <include refid="Blob_Column_List"/>
-    from tb_user
-    limit #{start},#{limit}
-  </select>
+    <select id="getBBSUser" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_user
+        limit #{start},#{limit}
+    </select>
 
-  <select id="getBBSUserCount" resultType="java.lang.Integer">
+    <select id="getBBSUserCount" resultType="java.lang.Integer">
     select
     count(*)
     from tb_user
   </select>
 
-  <select id="login" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List"/>
-    ,
-    <include refid="Blob_Column_List"/>
-    from tb_user
-    where loginid = #{loginid,jdbcType=VARCHAR}
-    and password = #{password,jdbcType=VARCHAR}
-  </select>
-  <update id="resetPassword" parameterType="java.lang.String">
+    <select id="login" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_user
+        where loginid = #{loginid,jdbcType=VARCHAR}
+        and password = #{password,jdbcType=VARCHAR}
+    </select>
+    <update id="resetPassword" parameterType="java.lang.String">
     update tb_user
     set password = #{password,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
-  <update id="updateUserStatus">
+    <update id="updateUserStatus">
     update tb_user
     set status = #{status,jdbcType=INTEGER}
     where uid = #{uid,jdbcType=VARCHAR}
   </update>
-  <select id="getUidByNickname" resultType="java.lang.String">
+    <select id="getUidByNickname" resultType="java.lang.String">
     select uid
     from tb_user
     where nickname=#{nickname}
   </select>
-  <select id="getUserWithCondition" resultMap="ResultMapWithBLOBs">
+    <select id="getUserWithCondition" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from tb_user
+        <where>
+            <if test="nickname != null">
+                and nickname = #{nickname,jdbcType=VARCHAR}
+            </if>
+            <if test="loginid != null">
+                and loginid = #{loginid,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </where>
+        limit #{start},#{limit}
+    </select>
+    <select id="getUserCountWithCondition" resultType="java.lang.Integer">
+        select
+        count(*)
+        from tb_user
+        <where>
+            <if test="nickname != null">
+                and nickname = #{nickname,jdbcType=VARCHAR}
+            </if>
+            <if test="loginid != null">
+                and loginid = #{loginid,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <select id="getNicknameByUid" resultType="java.lang.String">
     select
-    <include refid="Base_Column_List"/>
-    ,
-    <include refid="Blob_Column_List"/>
+    nickname
     from tb_user
-    <where>
-      <if test="nickname != null">
-        and nickname = #{nickname,jdbcType=VARCHAR}
-      </if>
-      <if test="loginid != null">
-        and loginid = #{loginid,jdbcType=VARCHAR}
-      </if>
-      <if test="status != null">
-        and status = #{status,jdbcType=INTEGER}
-      </if>
-    </where>
-    limit #{start},#{limit}
-  </select>
-  <select id="getUserCountWithCondition" resultType="java.lang.Integer">
-    select
-    count(*)
-    from tb_user
-    <where>
-      <if test="nickname != null">
-        and nickname = #{nickname,jdbcType=VARCHAR}
-      </if>
-      <if test="loginid != null">
-        and loginid = #{loginid,jdbcType=VARCHAR}
-      </if>
-      <if test="status != null">
-        and status = #{status,jdbcType=INTEGER}
-      </if>
-    </where>
+    where uid=#{uid}
   </select>
 </mapper>

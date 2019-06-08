@@ -121,15 +121,41 @@
                 }, {
                     field: 'title', title: '商品标题', align: 'center',
                 }, {
-                    field: 'isused', title: '崭新/二手', sort: true, align: 'center',
+                    field: 'isused', title: '崭新/二手', sort: true, align: 'center', templet: function (data) {
+                        if (data.isused === 1) {
+                            return "二手";
+                        } else {
+                            return "崭新";
+                        }
+                    }
                 }, {
                     field: 'ndegree', title: '新旧程度', sort: true, align: 'center',
                 }, {
                     field: 'content', title: '商品描述', align: 'center',
                 }, {
-                    field: 'price', title: '商品价格', align: 'center',
+                    field: 'price', title: '商品价格', align: 'center', templet: function (data) {
+                        return data.price + "元";
+                    }
                 }, {
-                    field: 'uid', title: '发布者', align: 'center',
+                    field: 'uid', title: '发布者', align: 'center', templet: function (data) {
+                        var nickname;
+                        $.ajax({
+                            type: 'post',
+                            url: '/user/getNicknameByUid.do',
+                            dataType: 'json',
+                            data: {
+                                uid: data.uid
+                            },
+                            async: false,
+                            success: function (data) {
+                                nickname = data.data;
+                            },
+                            error: function (data) {
+                                layer.alert("调取服务失败！");
+                            }
+                        })
+                        return nickname;
+                    }
                 }, {
                     field: 'pcount', title: '点赞数', unresize: true, align: 'center',
                 }, {

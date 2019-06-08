@@ -95,4 +95,10 @@ public class UserController {
         return iUserService.getUserWithPhone(page, limit, s_phone);
     }
 
+    @RequestMapping(value = "getNicknameByUid.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> getNicknameByUid(String uid) {
+        return iUserService.getNicknameByUid(uid);
+    }
+
 }

@@ -35,4 +35,6 @@ public interface UserMapper {
     List<User> getUserWithCondition(@Param("start") int start, @Param("limit") int limit, @Param("nickname") String nickname, @Param("status") Integer status, @Param("loginid") String loginid);
 
     Integer getUserCountWithCondition(@Param("nickname") String nickname, @Param("status") Integer status, @Param("loginid") String loginid);
+
+    String getNicknameByUid(String uid);
 }

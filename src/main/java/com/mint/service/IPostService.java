@@ -22,5 +22,4 @@ public interface IPostService {
     ServerResponse updatePostIsSticky(String sid, String tid, int issticky);
 
     DataResponse<List<Post>> getPostWithCondition(int page, int limit, String s_section, String s_title, Integer s_isbest, Integer s_issticky);
-
 }

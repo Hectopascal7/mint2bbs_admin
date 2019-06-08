@@ -134,22 +134,44 @@
                     field: 'ptime', title: '发布时间', sort: true, align: 'center',
                 }, {
                     field: 'sid', title: '分类', sort: true, align: 'center', templet: function (data) {
-                        if (data.sid === "activity") {
-                            return "社区活动";
-                        } else if (data.sid === "news") {
-                            return "社区新闻";
-                        } else if (data.sid === "guide") {
-                            return "社区指南";
-                        } else if (data.sid === "advice") {
-                            return "意见建议";
-                        } else if (data.sid === "topic") {
-                            return "业主讨论";
-                        } else {
-                            return "获取板块出错";
-                        }
+                        var sname;
+                        $.ajax({
+                            type: 'post',
+                            url: '/section/getSnameBySid.do',
+                            dataType: 'json',
+                            data: {
+                                sid: data.sid
+                            },
+                            async: false,
+                            success: function (data) {
+                                sname = data.data;
+                            },
+                            error: function (data) {
+                                layer.alert("调取服务失败！");
+                            }
+                        })
+                        return sname;
                     }
                 }, {
-                    field: 'uid', title: '发布者', sort: true, align: 'center',
+                    field: 'uid', title: '发布者', sort: true, align: 'center', templet: function (data) {
+                        var nickname;
+                        $.ajax({
+                            type: 'post',
+                            url: '/user/getNicknameByUid.do',
+                            dataType: 'json',
+                            data: {
+                                uid: data.uid
+                            },
+                            async: false,
+                            success: function (data) {
+                                nickname = data.data;
+                            },
+                            error: function (data) {
+                                layer.alert("调取服务失败！");
+                            }
+                        })
+                        return nickname;
+                    }
                 }, {
                     field: 'acount', title: '访问量', align: 'center',
                 }, {

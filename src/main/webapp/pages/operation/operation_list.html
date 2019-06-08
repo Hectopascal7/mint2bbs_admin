@@ -57,16 +57,6 @@
 <script src="../../lib/layui/layui.js" charset="utf-8"></script>
 <script src="../../static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
 </body>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData"
-                onclick="MintShow('发布公告','add.html',460,500)"><i class="layui-icon layui-icon-edit"></i>发布公告
-        </button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength"><i class="layui-icon layui-icon-delete"></i>删除公告
-        </button>
-        <!--            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
-    </div>
-</script>
 <script>
     layui.extend({
         admin: '{/}../../static/js/admin'
@@ -85,19 +75,61 @@
                 [{
                     type: 'checkbox'
                 }, {
-                    field: 'oid', title: '记录标识', align: 'center'
+                    field: 'bid', title: '记录标识', align: 'center'
                 }, {
-                    field: 'opuid', title: '执行人', sort: true, align: 'center'
+                    field: 'opUid', title: '执行人', sort: true, align: 'center', templet: function (data) {
+                        var nickname;
+                        $.ajax({
+                            type: 'post',
+                            url: '/user/getNicknameByUid.do',
+                            dataType: 'json',
+                            data: {
+                                uid: data.uid
+                            },
+                            async: false,
+                            success: function (data) {
+                                nickname = data.data;
+                            },
+                            error: function (data) {
+                                layer.alert("调取服务失败！");
+                            }
+                        })
+                        if (nickname == null) {
+                            return "[该用户已不存在]";
+                        }
+                        return nickname;
+                    }
                 }, {
-                    field: 'uid', title: '被执行人', sort: true, align: 'center'
+                    field: 'uid', title: '被执行人', sort: true, align: 'center', templet: function (data) {
+                        var nickname;
+                        $.ajax({
+                            type: 'post',
+                            url: '/user/getNicknameByUid.do',
+                            dataType: 'json',
+                            data: {
+                                uid: data.uid
+                            },
+                            async: false,
+                            success: function (data) {
+                                nickname = data.data;
+                            },
+                            error: function (data) {
+                                layer.alert("调取服务失败！");
+                            }
+                        })
+                        if (nickname == null) {
+                            return "[该用户已不存在]";
+                        }
+                        return nickname;
+                    }
                 }, {
-                    field: 'otime', title: '操作时间', align: 'center'
+                    field: 'btime', title: '操作时间', align: 'center'
                 }, {
-                    field: 'optype', title: '操作类型', align: 'center'
+                    field: 'opType', title: '操作类型', align: 'center'
                 }, {
-                    field: 'opobject', title: '操作对象类型', align: 'center'
+                    field: 'opObject', title: '操作对象类型', align: 'center'
                 }, {
-                    field: 'note', title: '备注', templet: '#bestTpl', unresize: true, align: 'center'
+                    field: 'note', title: '备注', unresize: true, align: 'center'
                 }]
             ],
             url: '/operation/getAllOperation.do',

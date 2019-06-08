@@ -102,7 +102,25 @@
                 }, {
                     field: 'tid', title: '微博唯一标识', align: 'center',
                 }, {
-                    field: 'uid', title: '微博发布者', sort: true, align: 'center',
+                    field: 'uid', title: '微博发布者', sort: true, align: 'center', templet: function (data) {
+                        var nickname;
+                        $.ajax({
+                            type: 'post',
+                            url: '/user/getNicknameByUid.do',
+                            dataType: 'json',
+                            data: {
+                                uid: data.uid
+                            },
+                            async: false,
+                            success: function (data) {
+                                nickname = data.data;
+                            },
+                            error: function (data) {
+                                layer.alert("调取服务失败！");
+                            }
+                        })
+                        return nickname;
+                    }
                 }, {
                     field: 'content', title: '微博内容', sort: true, align: 'center',
                 }, {

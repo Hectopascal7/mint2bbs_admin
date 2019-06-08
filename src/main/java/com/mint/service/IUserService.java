@@ -28,4 +28,6 @@ public interface IUserService {
     DataResponse<List<User>> getUserWithCondition(int page, int limit, String nickname, Integer status, String loginid);
 
     DataResponse<List<User>> getUserWithPhone(int page, int limit, String phone);
+
+    ServerResponse<String> getNicknameByUid(String uid);
 }

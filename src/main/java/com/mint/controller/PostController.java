@@ -60,10 +60,6 @@ public class PostController {
     @RequestMapping(value = "/getPostWithCondition.do", method = RequestMethod.POST)
     @ResponseBody
     public DataResponse<List<Post>> getPostWithCondition(int page, int limit, String s_section, String s_title, Integer s_isbest, Integer s_issticky) {
-        System.out.println(s_section);
-        System.out.println(s_isbest);
-        System.out.println(s_issticky);
-        System.out.println(s_title);
         return iPostService.getPostWithCondition(page, limit, s_section, s_title, s_isbest, s_issticky);
     }
 
